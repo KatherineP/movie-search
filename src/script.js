@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable no-use-before-define */
 const apiKey = '1da1496c';
 const yandexkey = 'trnsl.1.1.20200516T151204Z.8b71c6d9448d5f35.a3de40a16501e96f82831f4502cc525c6b7f93de';
 const div = document.querySelector('.swiper-wrapper');
@@ -18,10 +20,11 @@ async function getMovieDetails(imdbID) {
   return await response.json();
 }
 
-async function search(searchString, page) {
+async function search(searchString) {
   const url = `https://www.omdbapi.com/?s=${searchString}&page=${page}&apikey=${apiKey}&type=movie`;
   try {
     const response = await fetch(url);
+
     if (!response.ok) {
       console.log(`Looks like there was a problem. Status Code: ${response.status}`);
       return false;
@@ -58,7 +61,6 @@ async function addMoreSliders(str, page, swiper) {
 }
 
 renderSlider(movie, page);
-
 
 // function search2(searchString, page) {
 //     const url = `https://www.omdbapi.com/?s=${searchString}&page=${page}&apikey=${apiKey}`;
@@ -139,14 +141,14 @@ document.querySelector('.clear').addEventListener('click', (event) => {
   info.innerText = '';
 });
 
-async function translate(string) {
-  const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexkey}&text=${string}&lang=ru-en`;
-  const response = await fetch(url);
-  const data = await response.json();
-  data1 = await data.text[0];
-  info.innerText = `Showing results for ${data1}`;
-  return data1;
-}
+// async function translate(string) {
+// const url = `https://translate.yandex.net/api/v1.5/tr.json/translate?key=${yandexkey}&text=${string}&lang=ru-en`;
+//   const response = await fetch(url);
+//   const data = await response.json();
+//   data1 = await data.text[0];
+//   info.innerText = `Showing results for ${data1}`;
+//   return data1;
+// }
 
 async function logicForSearch() {
   preloader.classList.remove('done');
@@ -159,7 +161,9 @@ async function logicForSearch() {
   } else if (value.length <= 3) {
     info.innerText = 'Movie title should be longer than 3 letters';
   } else {
-    movie = await translate(value);
+    //  movie = await translate(value);
+    movie = value;
+    info.innerText = `Showing results for ${value}`;
     mySwiper.detachEvents();
     mySwiper.slideTo(1, false);
     renderSlider(movie, page);
