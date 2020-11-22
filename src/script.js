@@ -159,7 +159,8 @@ async function logicForSearch() {
   } else if (value.length <= 3) {
     info.innerText = 'Movie title should be longer than 3 letters';
   } else {
-    movie = await translate(value);
+    //  movie = await translate(value);
+    movie = value;
     mySwiper.detachEvents();
     mySwiper.slideTo(1, false);
     renderSlider(movie, page);
